@@ -84,7 +84,7 @@ class AbstractPreference
         $preference = array(
             'external_reference' => $cart->id,
             'notification_url' => $this->getNotificationUrl($cart),
-            'statement_descriptor' => $this->settings['MERCADOPAGO_INVOICE_NAME'],
+            'statement_descriptor' => $this->getStatementDescriptor(),
         );
 
         if (!$this->mercadopago->isTestUser()) {
@@ -201,6 +201,15 @@ class AbstractPreference
         }
 
         return $items;
+    }
+
+    public function getStatementDescriptor()
+    {
+        if ($this->settings['MERCADOPAGO_INVOICE_NAME'] == null) {
+            return '';
+        }
+
+        return $this->settings['MERCADOPAGO_INVOICE_NAME'];
     }
 
     /**
